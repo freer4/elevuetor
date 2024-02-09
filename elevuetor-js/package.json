@@ -1,0 +1,30 @@
+{
+  "name": "Elevuetor JS",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "Allows Vue3 to communicate with Entity Framework Core data models via convention",
+  "main": "index.js",
+  "exports": {
+    "." : "./index.js",
+    "./data-types/*": "./lib/data-types/*.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freer4/elevuetor.git"
+  },
+  "keywords": [
+    "vue3"
+  ],
+  "author": "Freer4",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/freer4/elevuetor/issues"
+  },
+  "homepage": "https://github.com/freer4/elevuetor/elevuetor-js#readme",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}
