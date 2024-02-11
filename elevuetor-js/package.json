@@ -1,5 +1,5 @@
 {
-  "name": "Elevuetor JS",
+  "name": "elevuetor-js",
   "type": "module",
   "version": "0.0.1",
   "description": "Allows Vue3 to communicate with Entity Framework Core data models via convention",

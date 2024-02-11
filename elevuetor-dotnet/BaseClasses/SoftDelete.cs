@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EfVueMantle;
+namespace ElevuetorDotNet;
 
 public interface ISoftDelete : ISoftDelete<long> { }
 public interface ISoftDelete<TKey>

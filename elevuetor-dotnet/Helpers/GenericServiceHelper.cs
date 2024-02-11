@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-namespace EfVueMantle;
+namespace ElevuetorDotNet;
 
 public class GenericServiceHelper<TModel> : GenericServiceHelper<TModel, long> 
     where TModel : ModelBase
@@ -125,7 +125,7 @@ public class GenericServiceHelper<TModel, TKey>
 
     /*
      * Order everything by property and direction
-     * EfVueCrust will use the full order to order subsets
+     * elevuetor-js will use the full order to order subsets
      */
     public List<TKey> Order(string propertyPath, int direction)
     {

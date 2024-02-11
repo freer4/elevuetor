@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace EfVueMantle.Extensions;
+namespace ElevuetorDotNet.Extensions;
 //credit to: https://digitaldrummerj.me/ef-core-soft-deletes/
 public static class ChangeTrackerExtensions
 {

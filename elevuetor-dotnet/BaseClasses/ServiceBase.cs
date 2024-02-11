@@ -1,8 +1,8 @@
-﻿using EfVueMantle.Helpers;
+﻿using ElevuetorDotNet.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace EfVueMantle;
+namespace ElevuetorDotNet;
 
 public class ServiceBase<TModel> : ServiceBase<TModel, long> 
     where TModel : ModelBase

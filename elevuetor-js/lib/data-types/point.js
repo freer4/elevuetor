@@ -1,4 +1,4 @@
-import DataType from "ef-vue-crust/data-types/data-type";
+import DataType from "elevuetor/data-types/data-type";
 class Point{
     constructor(value) {
         

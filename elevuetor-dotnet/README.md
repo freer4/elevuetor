@@ -1,5 +1,5 @@
-# EfVueMantle
-A package connecting Entity Framework Core data to EfVueCrust
+# ElevuetorDotNet
+A package connecting Entity Framework Core data to elevuetor-js
 
 What this project aims to do, ideally, is allow data models from .net applications to be understood and interacted with by Vue3 applications. 
 
@@ -10,30 +10,27 @@ What this project aims to do, ideally, is allow data models from .net applicatio
 ## Stack
 
 ### Entity Framework Core
-Define your models as you do today, using EfVueMantle.ModelBase as your base class. [(see caveats)](#caveats)
+Define your models as you do today, using ElevuetorDotNet.ModelBase as your base class. [(see caveats)](#caveats)
 
-### EfVueMantle 
+### ElevuetorDotNet 
 
-[Get it on GitHub](https://github.com/freer4/ef-vue-mantle) or [Nuget.org](https://www.nuget.org/packages/EfVueMantle)
+[Get it on GitHub](https://github.com/freer4/elevuetor/elevuetor-dotnet) or [Nuget.org](https://www.nuget.org/packages/ElevuetorDotNet)
 
-Mantle provides bases for model, controller, and service for each data type. This scaffolds the [basic functionality](#functionality) allowing Crust to explore data via convention. It also crafts Javascript class files for Crust, allowing your Vue3 application to understand your entire data structure.
+ElevuetorDotNet provides bases for model, controller, and service for each data type. This scaffolds the [basic functionality](#functionality) allowing Elevuetor to explore data via convention. This in turn crafts Javascript class files for Vue, allowing your front-end application to understand your entire data structure before gathering any data.
 
-### ef-vue-crust
+### elevuetor-js
 
-[Get it on GitHub](https://github.com/freer4/ef-vue-crust) or `npm install ef-vue-crust`
+[Get it on GitHub](https://github.com/freer4/elevuetor/elevuetor-js) or `npm install elevuetor-js`
 
 Provides interfaces for Vue3 to interact with your defined data models via convention. 
 
 Creates a virtual "Database" that holds onto records, remembers query results and sort orders, and generally lets you worry about presentation instead of how to transfer data back and forth.
 
 ### Vue3
-Traverse properties in your Vue3 components with dot notation object accessors, and let ef-vue-crust worry about asyncronous data loading.  
-
-(Core, Mantle, Crust, get it? Great. Naming things is hard.)
-
+Traverse properties in your Vue3 components with dot notation object accessors, and let elevuetor worry about asyncronous data loading.  
 
 ## Functionality {#functionality}
-These generic methods are understood and automatically sought by ef-vue-crust.
+These generic methods are understood and automatically sought by elevuetor-js.
 
 ### Get list of all ids for a model
 Implemented
@@ -66,7 +63,7 @@ Not implemented
 
 You'll need to call the ExportDataObjects method, with a path to wherever you want the exported JS to live. I suggest a directory in your VueProject/src folder named something snazzy and original like "data". It will create sub-directories for models and enums as necessary.
 
-This will automatically pick up any models using EfVueMantle.ModelBase as a base class, and any enums used in their properties.
+This will automatically pick up any models using ElevuetorDotNet.ModelBase as a base class, and any enums used in their properties.
 
 I just drop this in my `Program.cs`:
 
@@ -133,12 +130,12 @@ If the `[JsonIgnore]` decorator is used, the model export will ignore that prope
 ### Caveats
 1. The .net-> js translator currently requires that you manually define the ForeignKeys for 1-1 relationships in your models. Not a huge thing but a bit annoying. This can hopefully be overcome later
 
-2. Although Crust supports guid PKs/ids (untested) this package defaults ids to ints. It's not a priority for me at this time, but the intent is for GUID ids to be supported
+2. Although elevuetor-js supports guid PKs/ids (untested) this package defaults ids to ints. It's not a priority for me at this time, but the intent is for GUID ids to be supported
 ---
 
 ## Controllers
 
-Do your controllers as usual, just use the EfVueMantle.ControllerBase class as your base. 
+Do your controllers as usual, just use the ElevuetorDotNet.ControllerBase class as your base. 
 ```
 public class CommentController : ControllerBase<CommentModel, CommentService>
 {
@@ -148,7 +145,7 @@ public class CommentController : ControllerBase<CommentModel, CommentService>
 }
 ```
 
-This adds the default endpoints needed for Crust to get the data it wants, and you don't have to do anything else unless you need custom functionality. 
+This adds the default endpoints needed for Vue to get the data it wants, and you don't have to do anything else unless you need custom functionality. 
 
 All base controller methods are virtual, so override if you need more complex functionality.
 
@@ -172,4 +169,4 @@ Once again, that's all you need. Override the base methods as needed and expand 
 ## Not implemented features
 
 ### Open socket data pushing
-At some point we'll have open socket data alerts sent to your local Crust databases, allowing live updates on a per-entity basis.
+At some point we'll have open socket data alerts sent to your local elevuetor-js databases, allowing live updates on a per-entity basis.

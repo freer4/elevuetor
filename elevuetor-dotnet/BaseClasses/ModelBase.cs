@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace EfVueMantle;
+namespace ElevuetorDotNet;
 
 public interface IModelBase : IModelBase<long> { }
 

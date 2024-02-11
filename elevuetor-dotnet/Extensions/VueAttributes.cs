@@ -1,4 +1,4 @@
-﻿namespace EfVueMantle;
+﻿namespace ElevuetorDotNet;
 
 [AttributeUsage(AttributeTargets.Property)]
 public class EfVuePropertyTypeAttribute : Attribute

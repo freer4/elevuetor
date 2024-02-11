@@ -9,7 +9,7 @@ using System.ComponentModel;
 using static System.Net.Mime.MediaTypeNames;
 
 //Thanks to Svyatoslav Danyliv @stackoverflow.com
-namespace EfVueMantle.Helpers;
+namespace ElevuetorDotNet.Helpers;
 
 public static class ProjectionExtensions
 {

@@ -1,8 +1,8 @@
 ﻿/**
- * A flag array, transfered from Mantle as an int, treated in Crust as an array of ints of 2^n
+ * A flag array, transfered from Mantle as an int, treated in Elevuetor as an array of ints of 2^n
  */
 import {ref} from "@vue/runtime-core";
-import DataType from "ef-vue-crust/data-types/data-type";
+import DataType from "elevuetor/data-types/data-type";
 
 class Flag extends Array {
     /**

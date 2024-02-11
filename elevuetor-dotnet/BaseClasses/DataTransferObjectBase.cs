@@ -1,4 +1,4 @@
-﻿namespace EfVueMantle;
+﻿namespace ElevuetorDotNet;
 
 public class DataTransferObjectBase
 {

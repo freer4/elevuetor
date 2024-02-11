@@ -1,12 +1,12 @@
 import axios from 'axios';
-import {Session} from "ef-vue-crust";
+import {Session} from "elevuetor";
 import Guid from './data-types/guid';
 
 const Connection = axios.create({
-   baseURL: import.meta.env.VITE_MANTLE_URL || "/"
+   baseURL: import.meta.env.VITE_ELEVUETOR_URL || "/"
 });
 
-Connection.baseURL = import.meta.env.VITE_MANTLE_URL || "/";
+Connection.baseURL = import.meta.env.VITE_ELEVUETOR_URL || "/";
 Connection.withCredentials = true;
 
 Connection.interceptors.request.use(
@@ -20,7 +20,8 @@ Connection.interceptors.request.use(
 );
 
 let requests = {};
-window["__EF_VUE_CRUST_REQUESTS__"] = requests;
+//On window to allow access to requests (use for your automation/tracking purposes)
+window["__ELEVUETOR_REQUESTS__"] = requests;
 
 let reauthorizing = false;
 

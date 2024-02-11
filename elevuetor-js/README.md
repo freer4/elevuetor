@@ -1,4 +1,4 @@
-# ef-vue-crust
+# elevuetor
 A package to connect EfVueMantle to Vue3
 
 What this project aims to do, ideally, is allow data models from .net applications to be understood and interacted with by Vue3 applications. 
@@ -17,20 +17,20 @@ Define your models as you do today, using EfVueMantle.ModelBase as your base cla
 
 [Get it on GitHub](https://github.com/freer4/ef-vue-mantle) or [Nuget.org](https://www.nuget.org/packages/EfVueMantle)
 
-Mantle provides bases for model, controller, and service for each data type. This scaffolds the basic functionality allowing Crust to explore data via convention. It also crafts Javascript class files for Crust, allowing your Vue3 application to understand your entire data structure.
+Mantle provides bases for model, controller, and service for each data type. This scaffolds the basic functionality allowing Elevuetor to explore data via convention. It also crafts Javascript class files for Elevuetor, allowing your Vue3 application to understand your entire data structure.
 
-### ef-vue-crust
+### elevuetor
 
-[Get it on GitHub](https://github.com/freer4/ef-vue-crust) or `npm install ef-vue-crust`
+[Get it on GitHub](https://github.com/freer4/elevuetor) or `npm install elevuetor`
 
 Provides interfaces for Vue3 to interact with your defined data models via convention. 
 
 Creates a virtual "Database" that holds onto records, remembers query results and sort orders, and generally lets you worry about presentation instead of how to transfer data back and forth.
 
 ### Vue3
-Traverse properties in your Vue3 components with dot notation object accessors, and let ef-vue-crust worry about asyncronous data loading.  
+Traverse properties in your Vue3 components with dot notation object accessors, and let elevuetor worry about asyncronous data loading.  
 
-(Core, Mantle, Crust, get it? Great. Naming things is hard.)
+(Core, Mantle, Elevuetor, get it? Great. Naming things is hard.)
 
 ## Concept
 
@@ -38,7 +38,7 @@ The basic concept is the ability to write your data models once, using EF Core c
 
 (This doesn't need to be C#/.Net only, but it's the only server-side package I've built to support it so far. If you're interested in creating a version of Mantle for another language or framework, I'm happy to help!)
 
-Crust tries to cover all common data-use scenarios in a good user experience, for both the developer using the module and the client using your application.
+Elevuetor tries to cover all common data-use scenarios in a good user experience, for both the developer using the module and the client using your application.
 
 There's a huge caveat to the use of this module: data size. It can at times rely on lists of all accessible ids for entire data sets, depending on what you're doing. It's perfectly possible to use this module and only pull a single record at a time, and avoid this issue altogether. This can be further negated for many applications by limiting access to records in EF Core with your authorization implementation so that data sets are automatically trimmed down by user. But if you find yourself in a scenario where a user may have access to millions of rows of data and need to order the entire set, or show it in a list-view, this system will quickly be overwhelmed and eat client memory trying to track all of the data locally. //TODO Look at juggling data back out of local storage (even manually) to allow further negation of this issue
 
@@ -53,11 +53,11 @@ I will endeavor to get better performance benchmarks to demonstrate, but for thi
 
 ## Connection object
 
-Using Axios and environment settings, the Crust `Connection` object knows where and how to find the Mantle endpoints. This also includes some token handling for JWT authentication. **TODO** There is work being done to make this smarter, allowing authentication to be abstracted/passed in 
+Using Axios and environment settings, the Elevuetor `Connection` object knows where and how to find the Mantle endpoints. This also includes some token handling for JWT authentication. **TODO** There is work being done to make this smarter, allowing authentication to be abstracted/passed in 
 
 ## Session object
 
-In conjunction with `Connection`, the Crust `Session` object is a simple current-user-state interface for keeping track of... session. I don't know what else I can tell you about session. Properties added to this object are also stored in browser session and retrieved on page load. 
+In conjunction with `Connection`, the Elevuetor `Session` object is a simple current-user-state interface for keeping track of... session. I don't know what else I can tell you about session. Properties added to this object are also stored in browser session and retrieved on page load. 
 
 ---
 
@@ -83,7 +83,7 @@ Returns a bool
 
 ## Database
 
-The Crust Database is a proxy that handles dot-notation access to the entire data structure defined by your Mantle model exports.
+The Elevuetor Database is a proxy that handles dot-notation access to the entire data structure defined by your Mantle model exports.
 
 **Example:**
 
@@ -95,7 +95,7 @@ This juggles between existing data in memory and asking for data from Mantle thr
 
 Custom data types can be defined to allow standardized interaction with .Net data types. 
 
-With the exception of Crust's Model object and Enum class, these are extensions of the included DataType js class, which allows Crust Models to understand that these are non-js-standard data types. These have defined setter functions to translate the data from a format used in C# to an appropriate format usable by JS through Crust. They also have an _out property, re-translating the value to something C# appropriate and used by Crust to return sensible data to Mantle without further custom mapping and handling.
+With the exception of Elevuetor's Model object and Enum class, these are extensions of the included DataType js class, which allows Elevuetor Models to understand that these are non-js-standard data types. These have defined setter functions to translate the data from a format used in C# to an appropriate format usable by JS through Elevuetor. They also have an _out property, re-translating the value to something C# appropriate and used by Elevuetor to return sensible data to Mantle without further custom mapping and handling.
 
 TL;DR: basically just a way to translate data types between C# and JS.
 
@@ -112,8 +112,8 @@ Built in are a few key types:
 
 In Mantle, the decorators for a flag with a matching enum:
 ```
-[EfVueEnum(typeof(RoleType))] //your flag enum (shows up in the config in the Crust model properties)
-[EfVuePropertyType("Flag")] //tell Crust to use the flag type
+[EfVueEnum(typeof(RoleType))] //your flag enum (shows up in the config in the Elevuetor model properties)
+[EfVuePropertyType("Flag")] //tell Elevuetor to use the flag type
 public int Markings { get; set; } = 0; //whatever number property you're using to store the flag
 ```
 
@@ -138,7 +138,7 @@ This will add an include for your custom data-type definition `SomeType`, lookin
 ## Quick data access example:
 ```
 <script>
-import {Database} from 'ef-vue-crust';
+import {Database} from 'elevuetor';
 import PostModel from '@/data/models/PostModel'; //wherever your model files from Mantle live
 
 export default {
@@ -158,7 +158,7 @@ export default {
 
 > Wait, does this `posts` object have all of our data?
 
-Nope, this example understands that you want to use a Database containing records for your PostModel and will wait patiently for you to access the data before it fetches it. `PostModel` is coming from a JS file created by Mantle that informs Crust exactly what that data will look like without any API calls so far. 
+Nope, this example understands that you want to use a Database containing records for your PostModel and will wait patiently for you to access the data before it fetches it. `PostModel` is coming from a JS file created by Mantle that informs Elevuetor exactly what that data will look like without any API calls so far. 
 
 If this is the first time your application has attempted to access the `PostModel` records in `Database`, an object handling all interactive functionality for it is quietly created in the background and returned to you. None of the actual posts data has been acquired from the server yet. No calls to the API have been made at all so far.
 
@@ -173,9 +173,9 @@ So accessing `posts[id].title` will show an empty string in your vue template un
 
 ## Setup
 
-> npm install ef-vue-crust
+> npm install elevuetor
 
-You'll have to have set up Mantle already for Crust to do anything of importance. Otherwise, you won't have any model objects or API endpoints to work with.
+You'll have to have set up Mantle already for Elevuetor to do anything of importance. Otherwise, you won't have any model objects or API endpoints to work with.
 
 `Connection` object looks for a `VITE_MANTLE_URL` setting to know who to talk to, so add the path of your Mantle API root in your .env files: 
 
@@ -187,7 +187,7 @@ VITE_MANTLE_URL=https://localhost:7081/
 ## Database object
 
 ```
-import { Database } from 'ef-vue-crust';
+import { Database } from 'elevuetor';
 ```
 
 This is the object used to access all local "tables". Access is handled by proxies, creating tables on the fly the first time a user attempts to access them. 
@@ -201,7 +201,7 @@ This is the object used to access all local "tables". Access is handled by proxi
 A simple example
 
 ```
-import { Database } from 'ef-vue-crust';
+import { Database } from 'elevuetor';
 import PostModel from '@/data/models/PostModel'; //wherever your model files from Mantle live
 
 const posts = Database[PostModel.name];
@@ -248,7 +248,7 @@ Returns an `indexer` object, see below
 
 Returns an `indexer` object, see below
 
-Once this is loaded up, it doesn't need to be fetched again unless the data changes. Instead, it saves the ordered list of ids locally like an index. Subset ordering will then use an existing index to reorder the subset on the front end, avoiding extra calls all the way back to the DB just to sort. If the ascending or descending is asked for and the inverse is already indexed, Crust will just invert it.
+Once this is loaded up, it doesn't need to be fetched again unless the data changes. Instead, it saves the ordered list of ids locally like an index. Subset ordering will then use an existing index to reorder the subset on the front end, avoiding extra calls all the way back to the DB just to sort. If the ascending or descending is asked for and the inverse is already indexed, Elevuetor will just invert it.
 
 The less waiting for the server our UI needs to do, the better our UX can be.
 

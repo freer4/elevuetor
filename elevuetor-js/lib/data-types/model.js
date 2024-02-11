@@ -1,9 +1,9 @@
 ﻿import {shallowRef, triggerRef, shallowReactive, watch, reactive} from "vue";
 import {ref, unref} from "@vue/reactivity";
-import {Database} from "ef-vue-crust";
-import DataType from "ef-vue-crust/data-types/data-type";
-import Enum from "ef-vue-crust/data-types/enum";
-import Guid from "ef-vue-crust/data-types/guid";
+import {Database} from "elevuetor";
+import DataType from "elevuetor/data-types/data-type";
+import Enum from "elevuetor/data-types/enum";
+import Guid from "elevuetor/data-types/guid";
 import Validate from "../helpers/validator";
 
 
@@ -218,7 +218,7 @@ const _addProp = function (prop, propInfo){
         }
 
         if (propInfo.type.baseType === DataType){
-            //Specialized data types need their own translation from Mantle to Crust
+            //Specialized data types need their own translation from Mantle to Elevuetor
             //We handle this by setting the _raw value with the server output 
             this._values[prop]._raw = data[prop];
 

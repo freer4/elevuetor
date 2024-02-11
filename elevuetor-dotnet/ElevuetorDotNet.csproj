@@ -2,28 +2,29 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>EfVueMantle</RootNamespace>
+    <RootNamespace>ElevuetorDotNet</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AssemblyName>EfVueMantle</AssemblyName>
+    <AssemblyName>ElevuetorDotNet</AssemblyName>
     <LangVersion>preview</LangVersion>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Freer4</Authors>
     <Company>Actuate Project Solutions</Company>
     <Description>Connect Entity Framework Core models to Vue3 components via convention</Description>
     <Copyright>MIT License</Copyright>
-    <PackageProjectUrl>https://github.com/freer4/ef-vue-mantle</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/freer4/elevuetor/elevuetor-dotnet</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/freer4/ef-vue-mantle/tree/main</RepositoryUrl>
+    <RepositoryUrl>https://github.com/freer4/elevuetor/tree/main</RepositoryUrl>
     <PackageTags>entity framework;ef;ef core;vue;vuejs;vue3;</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <FileVersion>1.0.0.1</FileVersion>
     <Version>1.0.45</Version>
-    <Title>EfVueMantle</Title>
+    <Title>ElevuetorDotNet</Title>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageReleaseNotes>Initial port from the mantle package</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

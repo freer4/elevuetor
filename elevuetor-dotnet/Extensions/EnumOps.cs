@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Newtonsoft.Json;
 using System.Reflection;
 
-namespace EfVueMantle;
+namespace ElevuetorDotNet;
 
 public static class EnumExtensionMethods
 {

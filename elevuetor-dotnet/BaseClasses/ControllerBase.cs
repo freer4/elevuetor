@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace EfVueMantle;
+namespace ElevuetorDotNet;
 
 public class ControllerBase<TModel, TService> : ControllerBase<TModel, TService, long> 
     where TModel : ModelBase
