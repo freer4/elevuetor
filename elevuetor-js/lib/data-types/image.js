@@ -1,4 +1,4 @@
-﻿import DataType from "elevuetor/data-types/data-type";
+﻿import DataType from "elevuetor-js/data-types/data-type";
 //Concept - image handling object TODO
 //TODO convert to new DataType format
 class Image{

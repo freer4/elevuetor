@@ -3,7 +3,7 @@
  */
 //TODO this whole thing needs cleaned back up
 import {reactive} from "@vue/runtime-core";
-import DataType from "elevuetor/data-types/data-type";
+import DataType from "elevuetor-js/data-types/data-type";
 
 class ByteArray extends Array {
     static toString = (value, length = 1) => {

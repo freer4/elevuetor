@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {Session} from "elevuetor";
+import {Session} from "elevuetor-js";
 import Guid from './data-types/guid';
 
 const Connection = axios.create({

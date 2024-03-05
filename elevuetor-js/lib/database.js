@@ -1,9 +1,9 @@
 ﻿import {reactive, watch} from "@vue/runtime-core";
 import {ref} from "@vue/reactivity";
 import {shallowReactive} from "vue";
-import {Connection} from "elevuetor";
-import Model from "elevuetor/data-types/model";
-import Guid from "elevuetor/data-types/guid";
+import {Connection} from "elevuetor-js";
+import Model from "elevuetor-js/data-types/model";
+import Guid from "elevuetor-js/data-types/guid";
 
 /**
  * An extension of Array to handle async loading information

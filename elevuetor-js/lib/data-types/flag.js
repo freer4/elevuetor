@@ -2,7 +2,7 @@
  * A flag array, transfered from Mantle as an int, treated in Elevuetor as an array of ints of 2^n
  */
 import {ref} from "@vue/runtime-core";
-import DataType from "elevuetor/data-types/data-type";
+import DataType from "elevuetor-js/data-types/data-type";
 
 class Flag extends Array {
     /**

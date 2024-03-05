@@ -1,9 +1,9 @@
 ﻿import {shallowRef, triggerRef, shallowReactive, watch, reactive} from "vue";
 import {ref, unref} from "@vue/reactivity";
-import {Database} from "elevuetor";
-import DataType from "elevuetor/data-types/data-type";
-import Enum from "elevuetor/data-types/enum";
-import Guid from "elevuetor/data-types/guid";
+import {Database} from "elevuetor-js";
+import DataType from "elevuetor-js/data-types/data-type";
+import Enum from "elevuetor-js/data-types/enum";
+import Guid from "elevuetor-js/data-types/guid";
 import Validate from "../helpers/validator";
 
 

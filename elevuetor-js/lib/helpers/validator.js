@@ -1,6 +1,6 @@
 import {unref} from 'vue';
-import DataType from "elevuetor/data-types/data-type";
-import Model from 'elevuetor/data-types/model';
+import DataType from "elevuetor-js/data-types/data-type";
+import Model from 'elevuetor-js/data-types/model';
 
 //Validate a property with its value
 const _validate = (record, prop, property) => {
