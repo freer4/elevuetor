@@ -313,7 +313,7 @@ const _contains = function(prop, spec, subset = false) {
  */
 const _orderBy = function(prop = 'id', direction = 1, subset = false) {
 
-    //we already know the ids, no need to ask Mantle
+    //we already know the ids, no need to ask server
     if (prop === 'id'){
         let first = direction === 1 ? 1 : -1;
         let second = direction === 1 ? -1 : 1;
@@ -423,7 +423,7 @@ const addTableToDatabase = (model) => {
             //after the first call to this property, we don't need this functionality anymore
             delete _table._list;
             
-            //grab all ids from Mantle
+            //grab all ids from server
             let promise = Connection.getAllIds(model).then((response) => {
 
                 //add an empty model to the table for each returned id
@@ -439,7 +439,7 @@ const addTableToDatabase = (model) => {
                //!!error handling 
             });
 
-            //add the Mantle call to the buffer
+            //add the call to the buffer
             promiseBuffer.push(promise);
             
             //redefine the _list property to forevermore return the _keys property
@@ -488,7 +488,7 @@ const addTableToDatabase = (model) => {
     });
     
     /**
-     * Explicitly asks for this record from Mantle (overrides local data)
+     * Explicitly asks for this record from server (overrides local data)
      * @param id The id of the record to refresh (or local model thereof)
      * @returns promise 
      */
@@ -625,7 +625,7 @@ const addTableToDatabase = (model) => {
         },
     });
 
-    //How many records have been loaded from Mantle
+    //How many records have been loaded from server
     var trackLoaded = ref(0);
 
     //if we change the number we know have loaded or the number of records in table, updated loaded flag
@@ -754,7 +754,7 @@ const addTableToDatabase = (model) => {
 
 
     /**
-     * Sends data for a record to Mantle
+     * Sends data for a record to server
      * @param {Id, Record} id id or record 
      * @returns {Promise}
      */
@@ -775,7 +775,7 @@ const addTableToDatabase = (model) => {
             }
 
             record._saving = true;
-            //send data up to Mantle
+            //send data up to server
             return Connection.save(model, data).then((response) => {
                     
                 //If good, we should receive the fresh data with and can add/update directly to the local records
@@ -790,7 +790,7 @@ const addTableToDatabase = (model) => {
     });
 
     /**
-     * Sends all modified records to Mantle
+     * Sends all modified records to server
      * @param {null, [Id], [Record]} ids no parameter saves all modified records. Array of ids/records saves those records 
      * @returns {Promise}
      */
@@ -827,7 +827,7 @@ const addTableToDatabase = (model) => {
     });
     
     /**
-     * Adds record for the table (not sent to Mantle)
+     * Adds record for the table (not sent to server)
      * @returns false or Promise;
      */
      Object.defineProperty(_table, '_add', {
@@ -839,7 +839,7 @@ const addTableToDatabase = (model) => {
     
 
     /**
-     * Asks Mantle to delete a record
+     * Asks server to delete a record
      * @param {Id, Record} id the id or the record to delete
      * @returns {Promise} 
      */

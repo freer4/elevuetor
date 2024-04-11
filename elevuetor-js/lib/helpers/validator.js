@@ -3,8 +3,10 @@ import DataType from "elevuetor-js/data-types/data-type";
 import Model from 'elevuetor-js/data-types/model';
 
 //Validate a property with its value
-const _validate = (record, prop, property) => {
+const _validate = (record, prop, config) => {
     
+    const property = record._properties[prop]; 
+
     if (["id", "created", "updated"].indexOf(prop) !== -1
         || property.type.prototype instanceof Model //TODO maybe deep validate related models?
     ){
@@ -21,28 +23,31 @@ const _validate = (record, prop, property) => {
         if (errors.length){
             record._errors[prop] = errors;    
         }
-        return;
     }
 
     //Check required fields
     let val = unref(record._values[prop]);
 
-    if(property.config.nullable === false 
+    if(
+        (
+            //config not set and property not nullable 
+            (!config.hasOwnProperty("required") 
+                || property.config.nullable === false)
+            
+            //or config requires it
+            || config.required === true
+        )
         && (
             val === null 
             || val === undefined
             || property.type === String && val.trim() === ""
         )
     ){
-
-        errors.push({
-            type: 'required',
-            message: '{fieldName} is required.'
-        })  
-    }
-
-    if (errors.length){
-        record._errors[prop] = errors;    
+        record._addError(
+            prop,
+            'required',
+            '{fieldName} is required.'
+        );  
     }
 }
 
