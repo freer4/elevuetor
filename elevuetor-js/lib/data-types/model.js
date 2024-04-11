@@ -218,7 +218,7 @@ const _addProp = function (prop, propInfo){
         }
 
         if (propInfo.type.baseType === DataType){
-            //Specialized data types need their own translation from Mantle to Elevuetor
+            //Specialized data types need their own translation from back-end to front-end
             //We handle this by setting the _raw value with the server output 
             this._values[prop]._raw = data[prop];
 
@@ -227,9 +227,9 @@ const _addProp = function (prop, propInfo){
 
             if (data[prop] !== null && data[prop].length > 0){
                 //if we were given data, put it in the database appropriately
-                //By default, Mantle does only provides flat records, and this will 
-                //never happen. However, if you wish to include deep data from Mantle,
-                //you can add AutoInclude to your models or overwrite the base service methods
+                //By default, the back end only provides flat records, and this will 
+                //never happen. However, if you wish to include deep data from your server,
+                //you can, and this will handle that data
                 Database[propInfo.type.name]._add(data[prop].id, data[prop]);
             }
 
@@ -247,7 +247,7 @@ const _addProp = function (prop, propInfo){
             }
 
             //if we also got data loop through any data, put it in the database appropriately
-            //This does not happen with the default Mantle setup, it only returns FKs
+            //This does not happen with the default server-side setup, it only returns FKs
             for (let i = 0, l = data[prop].length; i < l; ++i){
                 Database[propInfo.type[0].name]._add(data[prop][i].id, data[prop][i])
             }
@@ -360,7 +360,7 @@ class Model extends Object{
         });
 
         /**
-         * Converts model values to an object for Mantle
+         * Converts model values to an object for server-side
          * @private
          */
         const _out = (types) => {
@@ -414,8 +414,8 @@ class Model extends Object{
             enumerable: false,
             configurable: false,
             writable: false,
-            value: (prop = null) => {
-                Validate(this, prop);
+            value: (prop = null, config = {}) => {
+                Validate(this, prop, config);
             }
         });
 
@@ -479,6 +479,25 @@ class Model extends Object{
             configurable: false,
             get: () => {
                 return _error.value;
+            }
+        });
+        Object.defineProperty(this, '_addError', {
+            enumerable: false,
+            configurable: false,
+            value: (property, type, message) => {
+                if (!_errors.hasOwnProperty(property)){
+                    _errors[property] = [];
+                };
+                let newError = {
+                    type,
+                    message
+                };
+                let oldError = _errors[property].findIndex(x => x.type === type);
+                if (oldError) {
+                    _errors[property].splice(oldError, 1, newError)
+                } else {
+                    _errors[property].splice(_errors[property].length, 0, newError);
+                }
             }
         });
 

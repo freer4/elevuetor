@@ -1,5 +1,5 @@
 # elevuetor
-A package to connect EfVueMantle to Vue3
+A package to connect your server to Vue3
 
 What this project aims to do, ideally, is allow data models from .net applications to be understood and interacted with by Vue3 applications. 
 
@@ -11,17 +11,17 @@ What this project aims to do, ideally, is allow data models from .net applicatio
 ## Stack
 
 ### Entity Framework Core
-Define your models as you do today, using EfVueMantle.ModelBase as your base class.
+Define your models as you do today, using the provided Elevuetor classes for your base classes.
 
-### EfVueMantle 
+### ElevuetorDotNet 
 
-[Get it on GitHub](https://github.com/freer4/ef-vue-mantle) or [Nuget.org](https://www.nuget.org/packages/EfVueMantle)
+[Get it on GitHub](https://github.com/freer4/elevuetor/tree/master/elevuetor-dotnet) or [Nuget.org](https://www.nuget.org/packages/ElevuetorDotNet)
 
-Mantle provides bases for model, controller, and service for each data type. This scaffolds the basic functionality allowing Elevuetor to explore data via convention. It also crafts Javascript class files for Elevuetor, allowing your Vue3 application to understand your entire data structure.
+ElevuetorDotNet provides bases for model, controller, and service for each data type. This scaffolds the basic functionality allowing Elevuetor to explore data via convention. It also crafts Javascript class files for ElevuetorJs, allowing your Vue3 application to understand your entire data structure.
 
-### elevuetor
+### elevuetor-js
 
-[Get it on GitHub](https://github.com/freer4/elevuetor) or `npm install elevuetor`
+[Get it on GitHub](https://github.com/freer4/elevuetor/tree/master/elevuetor-js) or `npm install elevuetor-js`
 
 Provides interfaces for Vue3 to interact with your defined data models via convention. 
 
@@ -30,13 +30,11 @@ Creates a virtual "Database" that holds onto records, remembers query results an
 ### Vue3
 Traverse properties in your Vue3 components with dot notation object accessors, and let elevuetor worry about asyncronous data loading.  
 
-(Core, Mantle, Elevuetor, get it? Great. Naming things is hard.)
-
 ## Concept
 
-The basic concept is the ability to write your data models once, using EF Core code-first database creation, and then have full, clean, easy, access to that structure and data all the way down into the UI. 
+The basic concept is the ability to write your data models once, using Entity Framework Core code-first database creation, and then have full, clean, easy, access to that structure and data all the way down into the UI. 
 
-(This doesn't need to be C#/.Net only, but it's the only server-side package I've built to support it so far. If you're interested in creating a version of Mantle for another language or framework, I'm happy to help!)
+(This doesn't need to be C#/.Net only, but it's the only server-side package I've built to support it so far. If you're interested in creating a version for another language or framework, I'm happy to help!)
 
 Elevuetor tries to cover all common data-use scenarios in a good user experience, for both the developer using the module and the client using your application.
 
@@ -53,7 +51,7 @@ I will endeavor to get better performance benchmarks to demonstrate, but for thi
 
 ## Connection object
 
-Using Axios and environment settings, the Elevuetor `Connection` object knows where and how to find the Mantle endpoints. This also includes some token handling for JWT authentication. **TODO** There is work being done to make this smarter, allowing authentication to be abstracted/passed in 
+Using Axios and environment settings, the Elevuetor `Connection` object knows where and how to find the server endpoints. This also includes some token handling for JWT authentication. **TODO** There is work being done to make this smarter, allowing authentication to be abstracted/passed in 
 
 ## Session object
 
@@ -83,19 +81,19 @@ Returns a bool
 
 ## Database
 
-The Elevuetor Database is a proxy that handles dot-notation access to the entire data structure defined by your Mantle model exports.
+The Elevuetor Database is a proxy that handles dot-notation access to the entire data structure defined by your server model exports.
 
 **Example:**
 
 > posts[id].comments[1].author.friends[6].displayName
 
-This juggles between existing data in memory and asking for data from Mantle through the Connection object and the promises it returns. It's all Vue refs and custom proxies, allowing you to ask for data that doesn't exist in the browser yet, and letting Vue reactivity to do its thing without further configuration or worry for you, the developer. 
+This juggles between existing data in memory and asking for data from the server through the Connection object and the promises it returns. It's all Vue refs and custom proxies, allowing you to ask for data that doesn't exist in the browser yet, and letting Vue reactivity to do its thing without further configuration or worry for you, the developer. 
 
 ## Data types
 
 Custom data types can be defined to allow standardized interaction with .Net data types. 
 
-With the exception of Elevuetor's Model object and Enum class, these are extensions of the included DataType js class, which allows Elevuetor Models to understand that these are non-js-standard data types. These have defined setter functions to translate the data from a format used in C# to an appropriate format usable by JS through Elevuetor. They also have an _out property, re-translating the value to something C# appropriate and used by Elevuetor to return sensible data to Mantle without further custom mapping and handling.
+With the exception of Elevuetor's Model object and Enum class, these are extensions of the included DataType js class, which allows Elevuetor Models to understand that these are non-js-standard data types. These have defined setter functions to translate the data from a format used in C# to an appropriate format usable by JS through Elevuetor. They also have an _out property, re-translating the value to something C# appropriate and used by Elevuetor to return sensible data to the server without further custom mapping and handling.
 
 TL;DR: basically just a way to translate data types between C# and JS.
 
@@ -103,31 +101,31 @@ Built in are a few key types:
 
 - Model: this is the big one, acting much the same way a C# model class does, plus the navigation style of Entity Frame Core. This works hand-in-hand with the Database proxy to provide an object you can utilize without worry about how the data will eventually get to the Vue presentation layer. 
 
-- Enum: this is the base for any Enum classes created through Mantle. Stored internally as int:string pairs, similar to C# enums, the setter takes an int and the getter returns a string. There is also a utlity _reverse object that will return the key int for a matching string value. 
+- Enum: this is the base for any Enum classes created through ElevuetorDotNet. Stored internally as int:string pairs, similar to C# enums, the setter takes an int and the getter returns a string. There is also a utlity _reverse object that will return the key int for a matching string value. 
 
 - Flag: takes a raw int, and returns an array of ints of 2^n. Your record will have access to the array, which you can manipulate. Internally validates that each value is of 2^n.
 - - *static* toArray(value): takes an int value and returns an array of ints of 2^n
 - - *static* toInt(value): takes an array of ints of 2^n and returns an int
 - - *static* toReadable(value, options): takes an array of ints and object of key:value pairs (such as a flag enum), creates a neat little human-friendly string like "one, two, and three"
 
-In Mantle, the decorators for a flag with a matching enum:
+In ElevuetorDotNet, the decorators for a flag with a matching enum:
 ```
 [EfVueEnum(typeof(RoleType))] //your flag enum (shows up in the config in the Elevuetor model properties)
 [EfVuePropertyType("Flag")] //tell Elevuetor to use the flag type
 public int Markings { get; set; } = 0; //whatever number property you're using to store the flag
 ```
 
-- BitArray: TODO: reevaluate how this is used  
+- BitArray: TODO: reevaluate how this is used... essentially a list of bools on the front-end
 
 - Guid: this class is mostly to mark a property as being a C# Guid, though otherwise it behaves as a normal string. The _out property simply returns the string value.
 
-- Point: an object with lattidue and longitude properties. This will likely be extended in the future, but we've used (with a custom JSON formatter on the .Net end) it to cleanly transport Point class data between EFCore models and Vue... views... without needing futher intermediary view models and such with individual lat/long properties defined.  _out simply returns an object with lattidue and longitude properties.
+- Point: an object with lattidue and longitude properties. This will likely be extended in the future, but we've used (with a custom JSON formatter on the .Net end) it to cleanly transport Point class data between EFCore models and Vue... views... without needing futher intermediary view models and such with individual lat/long properties defined.  _out simply returns an object with lattitude and longitude properties.
 
 ### Custom data types
 
-You can add your own data types as needed. Put these in a directory named "data-types", adjacent to the directories for models, unums, and dtos output by Mantle. 
+You can add your own data types as needed. Put these in a directory named "data-types", adjacent to the directories for models, unums, and dtos output by the server. 
 
-In Mantle, decorate the property like this: 
+In DotNet, decorate the property like this: 
 
 ```
     [EfVuePropertyType("SomeType")]
@@ -139,7 +137,7 @@ This will add an include for your custom data-type definition `SomeType`, lookin
 ```
 <script>
 import {Database} from 'elevuetor';
-import PostModel from '@/data/models/PostModel'; //wherever your model files from Mantle live
+import PostModel from '@/data/models/PostModel'; //wherever your model files from the server live
 
 export default {
     name: "PostList",
@@ -158,7 +156,7 @@ export default {
 
 > Wait, does this `posts` object have all of our data?
 
-Nope, this example understands that you want to use a Database containing records for your PostModel and will wait patiently for you to access the data before it fetches it. `PostModel` is coming from a JS file created by Mantle that informs Elevuetor exactly what that data will look like without any API calls so far. 
+Nope, this example understands that you want to use a Database containing records for your PostModel and will wait patiently for you to access the data before it fetches it. `PostModel` is coming from a JS file created by the server that informs ElevuetorJS exactly what that data will look like without any API calls so far. 
 
 If this is the first time your application has attempted to access the `PostModel` records in `Database`, an object handling all interactive functionality for it is quietly created in the background and returned to you. None of the actual posts data has been acquired from the server yet. No calls to the API have been made at all so far.
 
@@ -166,8 +164,8 @@ If this is the first time your application has attempted to access the `PostMode
 
 - Check the local `_database[PostModel]` object, the in-memory data collection, for the existance of this Id. 
 - If it does not exist, it will create an empty `PostModel` instance with this Id. This reference is returned immediately, allowing you to chain further down the data structure.
-- `Database` will then add this Id to a queue that will use `Connection` to seamlessly ask for the data for your front-end-accessed records from Mantle.
-- When the data is returned from Mantle, it is used to update the existing, corresponding reactive PostModel object, which in turn triggers Vue's UI updates. 
+- `Database` will then add this Id to a queue that will use `Connection` to seamlessly ask for the data for your front-end-accessed records from the server.
+- When the data is returned from the server, it is used to update the existing, corresponding reactive PostModel object, which in turn triggers Vue's UI updates. 
 
 So accessing `posts[id].title` will show an empty string in your vue template until it manages to get the data back from the server, at which point that beautiful Vue renderer will update the UI with the value. That's not ideal, so there are lots of helpers built in to make the user experience even better, such as a `_loaded` bool. 
 
@@ -175,12 +173,12 @@ So accessing `posts[id].title` will show an empty string in your vue template un
 
 > npm install elevuetor
 
-You'll have to have set up Mantle already for Elevuetor to do anything of importance. Otherwise, you won't have any model objects or API endpoints to work with.
+You'll have to have set up ElevuetorDotNet already for ElevuetorJs to do anything of importance. Otherwise, you won't have any model objects or API endpoints to work with.
 
-`Connection` object looks for a `VITE_MANTLE_URL` setting to know who to talk to, so add the path of your Mantle API root in your .env files: 
+`Connection` object looks for a `VITE_ELEVUETOR_URL` setting to know who to talk to, so add the path of your server API root in your .env files: 
 
 ```
-VITE_MANTLE_URL=https://localhost:7081/
+VITE_ELEVUETOR_URL=https://localhost:7081/
 
 ```
 
@@ -202,12 +200,12 @@ A simple example
 
 ```
 import { Database } from 'elevuetor';
-import PostModel from '@/data/models/PostModel'; //wherever your model files from Mantle live
+import PostModel from '@/data/models/PostModel'; //wherever your model files from the server live
 
 const posts = Database[PostModel.name];
 ```
 
-`posts` is a table object full of handy methods and properties. Access a record by id like `posts[id]` and a proxy will return the appropriate Model object, requesting data directly from Mantle if it hasn't been loaded yet.  
+`posts` is a table object full of handy methods and properties. Access a record by id like `posts[id]` and a proxy will return the appropriate Model object, requesting data directly from the server if it hasn't been loaded yet.  
 
 ### Table Methods
 
@@ -215,7 +213,7 @@ const posts = Database[PostModel.name];
 ---
 
 `_equals(prop, spec, subset = false)`
-- `prop` (property) is a string of the dot-notation property path you want to match on. This could be a property of the current model, i.e. `created`, or it could be a property on a related model, i.e. `categories.title`. Mantle will know what to do with that path and setup the EF Core query appropriately. 
+- `prop` (property) is a string of the dot-notation property path you want to match on. This could be a property of the current model, i.e. `created`, or it could be a property on a related model, i.e. `categories.title`. ElevuetorDotNet will know what to do with that path and setup the EF Core query appropriately. 
 - `spec` is the value you are searching for. For now, all matches are case-insensitive. This is a full-match.
 - `subset` is optional, and takes an array of ids. If passed, the return will only include any of these ids that matched the query, rather than all ids returned by the API call. 
 
@@ -224,7 +222,7 @@ Returns an `indexer` object, see below
 ---
 
 `_contains(prop, spec, subset = false)`
-- `prop` (property) is a string of the dot-notation property path you want to match on. This could be a property of the current model, i.e. `created`, or it could be a property on a related model, i.e. `categories.title`. Mantle will know what to do with that path and setup the EF Core query appropriately. 
+- `prop` (property) is a string of the dot-notation property path you want to match on. This could be a property of the current model, i.e. `created`, or it could be a property on a related model, i.e. `categories.title`. ElevuetorDotNet will know what to do with that path and setup the EF Core query appropriately. 
 - `spec` is the value you are searching for. For now, all matches are case-insensitive. This is a partial match.
 - `subset` is optional, and takes an array of ids. If passed, the return will only include any of these ids that matched the query, rather than all ids returned by the API call. 
 
@@ -242,7 +240,7 @@ Returns an `indexer` object, see below
 ---
 
 `_orderBy(prop, direction, subset=false)`
-- `prop` (property) is a string of the dot-notation property path you want to order this model on. This could be a property of the current model, i.e. `created`, or it could be a property on a related model, i.e. `categories.title`. Mantle will know what to with that path and return a list of ids ordered by your desired property. 
+- `prop` (property) is a string of the dot-notation property path you want to order this model on. This could be a property of the current model, i.e. `created`, or it could be a property on a related model, i.e. `categories.title`. ElevuetorDotNet will know what to with that path and return a list of ids ordered by your desired property. 
 - `direction` (default 1) 1 = ascending, 2 = descending 
 - `subset` is optional, and takes an array of ids. If passed, the return will be an array of only these ids, but reordered, rather than all of the ordered ids for a given property. 
 
@@ -262,7 +260,7 @@ No parameters.
 
 Returns a promise. 
 
-**USE. SPARINGLY.** This method *will* ask for the *entire* collection of available data from Mantle for this Model. This is very useful for small data collections that change enough to not make sense as an Enum, but are static and universal enough that you might want to preload them immediately.
+**USE. SPARINGLY.** This method *will* ask for the *entire* collection of available data from ElevuetorDotNet for this Model. This is very useful for small data collections that change enough to not make sense as an Enum, but are static and universal enough that you might want to preload them immediately.
 
 ---
 
@@ -271,14 +269,14 @@ Returns a promise.
 
 Similar to `_all()` but not as dangerous, you can pass a list of ids in and load data for that subset of the model. Great for pre-loading sub-data of a many-to- relationship for a given record - just pass the ids list, i.e. `Database[PostModel.name].load(myCurrentPost.commentsIds)`.
 
-If `subset` is not passed, it will attempt to load all records for known ids that are not yet loaded in this table. It does not ask Mantle for the full list of ids before doing so. 
+If `subset` is not passed, it will attempt to load all records for known ids that are not yet loaded in this table. It does not ask ElevuetorDotNet for the full list of ids before doing so. 
 
 ---
 
 `_save(id/data)`
 - `id/data` can be the id or the actual record reference
 
-Sends request to Mantle to add or update this record. 
+Sends request to ElevuetorDotNet to add or update this record. 
 
 If data is passed with no Id, it's an add. If an Id is passed, or data is passed with an Id, it will attempted an update. Mostly though, it's easier to use the
 `_save` method directly on the record itself. And don't loop - if you have many things to save at once, use `_saveAll`.
@@ -296,7 +294,7 @@ Adds records locally to the Database for this Model.
 `_saveAll(ids/references)`
 - `ids` an array of ids or actual model references (or even a mix). 
 
-Send the indicated records to Mantle to be saved. 
+Send the indicated records to ElevuetorDotNet to be saved. 
 
 If `ids` parameter is omitted, all modified (including added) records for this table will be gathered and sent up. 
 
@@ -312,14 +310,14 @@ Removes the record from the local Database, but doesn't delete it from the serve
 `_delete(id/reference)`
 - `id` can be the id or the actual record reference
 
-Sends request to Mantle to delete the record. Also removes it from the local Database.
+Sends request to ElevuetorDotNet to delete the record. Also removes it from the local Database.
 
 ---
 
 `_refresh(id/reference)`
 - `id` can be the id or the actual record reference
 
-Explicitly asks for this record from Mantle, even if you already have it loaded
+Explicitly asks for this record from ElevuetorDotNet, even if you already have it loaded
 
 Returns a promise. 
 
@@ -329,7 +327,7 @@ Returns a promise.
 
 No parameters.
 
-Manually refresh the list of all ids from Mantle. See Table `_list` property.
+Manually refresh the list of all ids from ElevuetorDotNet. See Table `_list` property.
 
 
 
@@ -347,7 +345,7 @@ A Vue reactive array of keys that... wait we already have that? This is the more
 
 See `_refreshList()` table method for refreshing the values here. 
 
-**!important** `_list` is what you use to see what record ids you have without loading up the full data for said records. If you try to access the records in the Table through the individual Model objects (such as looping through the entire Table), the accessing of those Model objects will trigger their load from Mantle. 
+**!important** `_list` is what you use to see what record ids you have without loading up the full data for said records. If you try to access the records in the Table through the individual Model objects (such as looping through the entire Table), the accessing of those Model objects will trigger their load from ElevuetorDotNet. 
 
 ---
 
@@ -361,7 +359,7 @@ Dev story: this is accessed through a property instead of being the default retu
 
 `_length`
 
-A Vue ref to the number of ids currently in the `Database[Model]`. Most often used after `_list`, ensuring all current ids have been fetched from Mantle, regardless of if the records have been pulled down yet.
+A Vue ref to the number of ids currently in the `Database[Model]`. Most often used after `_list`, ensuring all current ids have been fetched from ElevuetorDotNet, regardless of if the records have been pulled down yet.
 
 ---
 
@@ -392,7 +390,7 @@ The `Indexer` object is actually an extension of Array. It is used to hold index
 
 `_loader` 
 
-A promise, which resolves when Mantle responds to a sort search or order request. 
+A promise, which resolves when ElevuetorDotNet responds to a sort search or order request. 
 
 `_loaded`
 
@@ -421,7 +419,7 @@ const post = Database[PostModel.name][postId];
 
 Now that you have your model object, what do you do with it? 
 
-Any property defined by your exported C# Model from Mantle will be enumerable and accessible. Properties for related models are seamlessly accessed from the Database object automatically based on their Foreign Key, similar to how Entity Framework navigates between records. Just drill into your model object how you like and the data will be gathered for you.
+Any property defined by your exported C# Model from ElevuetorDotNet will be enumerable and accessible. Properties for related models are seamlessly accessed from the Database object automatically based on their Foreign Key, similar to how Entity Framework navigates between records. Just drill into your model object how you like and the data will be gathered for you.
 
 There are a few extra properties and methods to help you out.
 
@@ -435,17 +433,17 @@ No parameters, no return. Pokes the reactive model for sticky situations. I have
 
 `_populate(record)` 
 
-Takes a naked object of property:values (such as that returned from Mantle) and populates each model property. This may be very different from values seen through direct proeprty getting and setting. 
+Takes a naked object of property:values (such as that returned from ElevuetorDotNet) and populates each model property. This may be very different from values seen through direct proeprty getting and setting. 
 
 This does all the wiring for relationships and handles any data-type translations for those non-js-standard data types, such as guids, bit-arrays, flags, and points. 
 
-You shouldn't be using this directly very often, Mantle should be populating your data automatically.
+You shouldn't be using this directly very often, ElevuetorDotNet should be populating your data automatically.
 
 ---
 
 `_out()`
 
-Returns the current values for the record, converted back to formats ready to be shipped back up to C# through Mantle. 
+Returns the current values for the record, converted back to formats ready to be shipped back up to C# through ElevuetorDotNet. 
 
 Again, you shouldn't be using this directly very often, mostly useful for debugging.
 
@@ -454,11 +452,11 @@ Again, you shouldn't be using this directly very often, mostly useful for debugg
 
 `_save()`
 
-If you're editing a record, this will ask Mantle to update it. 
+If you're editing a record, this will ask ElevuetorDotNet to update it. 
 
-If you're creating a new record, this will ask Mantle to save it. **Do not set the id** - if the id is set, it will try to update a record with that id. Let your RDB provide the primary keys for new records. 
+If you're creating a new record, this will ask ElevuetorDotNet to save it. **Do not set the id** - if the id is set, it will try to update a record with that id. Let your RDB provide the primary keys for new records. 
 
-If this model is a data transfer object, it will bypass the local Database and hit the route specified in the model definition. See (Mantle DTO)[https://github.com/freer4/ef-vue-mantle] 
+If this model is a data transfer object, it will bypass the local Database and hit the route specified in the model definition. See (ElevuetorDotNet DTO)[https://github.com/freer4/ef-vue-ElevuetorDotNet] 
 
 TODO: if there's a related DB model for the DTO, refresh populate the Database automagically. 
 
@@ -472,7 +470,7 @@ Removes this record from the local Database.
 
 `_delete()`
 
-Sends request to Mantle to delete this record. Also removes it from the local Database 
+Sends request to ElevuetorDotNet to delete this record. Also removes it from the local Database 
 
 ---
 
@@ -503,13 +501,13 @@ Author's log, stardate 184.32.8: TODO It would be nice to be able to not have to
 
 `_loader`
 
-Returns a promise that gets resolved once the model is loaded with data via `_populate` - which is what it does internally when fetching from Mantle. Useful for logic around records in your setup. 
+Returns a promise that gets resolved once the model is loaded with data via `_populate` - which is what it does internally when fetching from ElevuetorDotNet. Useful for logic around records in your setup. 
 
 ---
 
 `_fetching` 
 
-Returns a bool, indicating if this record is in the process of fetching data from Mantle
+Returns a bool, indicating if this record is in the process of fetching data from ElevuetorDotNet
 
 ---
 
