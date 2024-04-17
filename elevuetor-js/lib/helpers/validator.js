@@ -28,11 +28,13 @@ const _validate = (record, prop, config) => {
     //Check required fields
     let val = unref(record._values[prop]);
 
-    if(
+    if(config?.hasOwnProperty("required") && typeof config.required === "function"){
+        config.required(record, prop, config);
+    } else if(
         (
             //config not set and property not nullable 
             (!config.hasOwnProperty("required") 
-                || property.config.nullable === false)
+                && property.config.nullable === false)
             
             //or config requires it
             || config.required === true
@@ -52,18 +54,18 @@ const _validate = (record, prop, config) => {
 }
 
 //Take the model instance, loop over all the properties
-const Validate = (record, prop = null) => {
+const Validate = (record, prop = null, config) => {
     const properties = record.constructor.properties;
 
     //overload for validating just one prop
     if (prop !== null){
-        _validate(record, prop, properties[prop]);
+        _validate(record, prop, config);
         return;
     }
 
     //go through every property, checking each
     for (let name in properties){
-        _validate(record, name, properties[name]);
+        _validate(record, name, config);
     }
 }
 
