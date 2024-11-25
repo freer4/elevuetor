@@ -569,9 +569,13 @@ Yeah examples would help.
 
 ## Get Started
 Create new vue project.
+
 `npm install elevuetor-js`
+
 Recomended: `npm install vue-router`
+
 Create `.env.local` file in project root
+
 Add `VITE_ELEVUETOR_URL=https://localhost:7221/` line where url is the back-end Elevuetor server entry path
 
 
