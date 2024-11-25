@@ -184,3 +184,7 @@ Install packages:
 Configure SQL connection
 
 Create Models/Controllers/Services
+
+Update program.cs to process models
+
+Add context file
