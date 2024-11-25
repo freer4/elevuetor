@@ -170,3 +170,17 @@ Once again, that's all you need. Override the base methods as needed and expand 
 
 ### Open socket data pushing
 At some point we'll have open socket data alerts sent to your local elevuetor-js databases, allowing live updates on a per-entity basis.
+
+## Get Started
+Create new dotnet API
+
+Install packages: 
+- ElevuetorDotNet
+- Microsoft.EntityFrameworkCore
+- Microsoft.EntityFrameworkCore.SqlServer
+- Microsoft.EntityFrameworkCore.Tools
+- Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite (if needed)
+
+Configure SQL connection
+
+Create Models/Controllers/Services
