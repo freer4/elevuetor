@@ -1,11 +1,11 @@
 {
   "name": "elevuetor-js",
   "type": "module",
-  "version": "0.0.5",
+  "version": "0.0.9",
   "description": "Allows Vue3 to communicate with Entity Framework Core data models via convention",
   "main": "index.js",
   "exports": {
-    "." : "./index.js",
+    ".": "./index.js",
     "./data-types/*": "./lib/data-types/*.js"
   },
   "scripts": {
@@ -25,6 +25,6 @@
   },
   "homepage": "https://github.com/freer4/elevuetor/elevuetor-js#readme",
   "dependencies": {
-    "axios": "^0.27.2"
+    "axios": "^1.8.4"
   }
 }
